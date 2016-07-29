@@ -239,7 +239,7 @@ QImageWidget::QImageWidget( QWidget *parent )
     m_filters = "*.png ; *.jpg ; *.bmp ; *.ico ; *.jpeg ; *.gif";
     m_subDirectorySearching = true;
 
-    setPixmapChanged( false );
+    setCurrentPixmapModified( false );
     //! [2]
 
     //! [3]
@@ -487,7 +487,7 @@ void QImageWidget::updatePixmap()
     emit cropped( false );
 
     // false pixmap changed
-    setPixmapChanged( false );
+    setCurrentPixmapModified( false );
 
     // check go operations enabled
     if ( m_currentPixmapIndex == 0  ) {       // if 1-st item
@@ -534,9 +534,9 @@ QString QImageWidget::standartPixmapsDirectory()
 }
 //---------------------------------------------------------------------------
 
-bool QImageWidget::isPixmapChanged() const
+bool QImageWidget::isCurrentPixmapModified() const
 {
-    return m_isPixmapChanged;
+    return m_isCurrentPixmapModified;
 }
 //! [2]
 
@@ -768,16 +768,14 @@ void QImageWidget::copy()
 
 //---------------------------------------------------------------------------
 
-// does anyone need this?
-// todo: undo for cut, if cut is needed
-// void QImageWidget::cut()
-// {
-//     // todo: undo, redo
+//void QImageWidget::cut()
+//{
+//    // todo: undo, redo
 
-//     copy();
+//    copy();
 
-//     m_customGraphicsView->scene()->removeItem( m_graphicsPixmapItem );
-// }
+//    m_customGraphicsView->scene()->removeItem( m_graphicsPixmapItem );
+//}
 
 //---------------------------------------------------------------------------
 
@@ -840,7 +838,7 @@ void QImageWidget::setUndoRedoAvailable()
     emit undoAvailable( m_undoStack->canUndo() );
     emit redoAvailable( m_undoStack->canRedo() );
 
-    setPixmapChanged( m_undoStack->canUndo() );
+    setCurrentPixmapModified( m_undoStack->canUndo() );
 }
 
 //! [6]
@@ -870,11 +868,11 @@ void QImageWidget::rotateRight()
     setUndoRedoAvailable();
 }
 
-void QImageWidget::setPixmapChanged( const bool &changed )
+void QImageWidget::setCurrentPixmapModified( const bool &changed )
 {
     qDebug() << Q_FUNC_INFO  << trUtf8( "Pixmap changed: " ) << changed;
-    m_isPixmapChanged = changed;
-    emit pixmapChanged( m_isPixmapChanged );
+    m_isCurrentPixmapModified = changed;
+    emit currentPixmapModified( m_isCurrentPixmapModified );
 }
 
 //---------------------------------------------------------------------------
@@ -1004,7 +1002,7 @@ bool QImageWidget::save()
     }
 
     if ( m_currentPixmap.save( m_currentPixmapPath ) ) {
-        setPixmapChanged( false );
+        setCurrentPixmapModified( false );
         m_undoStack->clear();
         setUndoRedoAvailable();
         return true;
@@ -1026,10 +1024,10 @@ bool QImageWidget::saveAs()
 
     m_currentPixmapPath = m_newPath;
     if ( m_currentPixmap.save( m_newPath ) ) {
-        setPixmapChanged( false );
+        setCurrentPixmapModified( false );
         m_undoStack->clear();
         setUndoRedoAvailable();
-        m_currentPixmap = QPixmap( m_newPath ); // not good?
+        m_currentPixmap = QPixmap( m_newPath );
         updatePixmap();
         return true;
     }

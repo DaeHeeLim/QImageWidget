@@ -166,7 +166,7 @@ public:
     //! [2] PIXMAP
     static QString standartPixmapsDirectory();
 
-    bool isPixmapChanged() const;
+    bool isCurrentPixmapModified() const;
     //! [2]
 
     //! SIGNALS
@@ -177,7 +177,7 @@ signals:
     void currentPixmapPathChanged( const QString & );
 
     void pixmapAvailable( const bool & );
-    void pixmapChanged( const bool & );
+    void currentPixmapModified( const bool & );
     //! [2]
 
     //! [3] CONTROL SIGNALS
@@ -247,7 +247,7 @@ public slots:
 
     //! [5] EDIT
     void copy();
-    // void cut();
+//    void cut();
     void paste();
     //! [5]
 
@@ -263,7 +263,7 @@ public slots:
     // rotate
     void rotateLeft();
     void rotateRight();
-    void setPixmapChanged( const bool &changed );
+    void setCurrentPixmapModified( const bool &changed );
     void crop();
     void remove();
     void setShowRemoveDialog( const bool &show );
@@ -391,7 +391,7 @@ private:
     QGraphicsPixmapItem *m_graphicsPixmapItem;
     QString m_currentPixmapPath;
     int m_currentPixmapIndex;
-    bool m_isPixmapChanged;
+    bool m_isCurrentPixmapModified;
     bool m_subDirectorySearching;
     QString m_filters; // png, jpg etc
     //! [2]
@@ -537,7 +537,7 @@ public:
 
     void redo() {
         m_imageWidget->setPixmap( m_pastedPixmap );
-        m_imageWidget->setPixmapChanged( true );
+        m_imageWidget->setCurrentPixmapModified( true );
     }
 
 private:
@@ -582,7 +582,7 @@ public:
         }
 
         m_imageWidget->setPixmap( m_originalPixmap );
-        m_imageWidget->setPixmapChanged( true );
+        m_imageWidget->setCurrentPixmapModified( true );
     }
 
 private:
