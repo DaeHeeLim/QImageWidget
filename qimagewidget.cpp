@@ -30,12 +30,15 @@ QResizableRubberBand::QResizableRubberBand( QWidget *parent )
 }
 
 //------------------------------------------------------------------------
+
 void QResizableRubberBand::resizeEvent( QResizeEvent *event )
 {
     rubberBand->resize( size() );
     event->accept();
 }
+
 //------------------------------------------------------------------------
+
 void QResizableRubberBand::mousePressEvent( QMouseEvent *event )
 {
     rubberBandOffset = event->pos();
@@ -43,7 +46,9 @@ void QResizableRubberBand::mousePressEvent( QMouseEvent *event )
 
     event->accept();
 }
-//------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+
 void QResizableRubberBand::mouseMoveEvent( QMouseEvent *event )
 {
     if ( rubberBandMove ) {
@@ -52,7 +57,9 @@ void QResizableRubberBand::mouseMoveEvent( QMouseEvent *event )
 
     event->accept();
 }
-//------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+
 void QResizableRubberBand::mouseReleaseEvent( QMouseEvent *event )
 {
     rubberBandMove = false;
@@ -60,13 +67,15 @@ void QResizableRubberBand::mouseReleaseEvent( QMouseEvent *event )
     event->accept();
 }
 
-//------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+
 void QResizableRubberBand::mouseDoubleClickEvent( QMouseEvent *event )
 {
     emit doubleClicked();
 
     event->accept();
 }
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 //! QCUSTOM GRAPHICS VIEW //!
@@ -106,6 +115,8 @@ QCustomGraphicsView::~QCustomGraphicsView()
 
 }
 
+//---------------------------------------------------------------------------
+
 //! [2]
 void QCustomGraphicsView::startSelection()
 {
@@ -135,6 +146,7 @@ void QCustomGraphicsView::mousePressEvent( QMouseEvent *event )
 
     event->accept();
 }
+
 //---------------------------------------------------------------------------
 
 void QCustomGraphicsView::mouseMoveEvent( QMouseEvent *event )
@@ -177,21 +189,24 @@ void QCustomGraphicsView::getRect() // get selected rect
     emit selectedRect( r );
     emit selectedDone();
 }
-
-//---------------------------------------------------------------------------
 //! [2]
 
-//! [3]
+//---------------------------------------------------------------------------
 
+//! [3]
 void QCustomGraphicsView::zoomIn()
 {
     scale( 1.15, 1.15 );
 }
 
+//---------------------------------------------------------------------------
+
 void QCustomGraphicsView::zoomOut()
 {
     scale( 1 / 1.15, 1 / 1.15 );
 }
+
+//---------------------------------------------------------------------------
 
 void QCustomGraphicsView::wheelEvent( QWheelEvent *event )
 {
@@ -207,8 +222,8 @@ void QCustomGraphicsView::wheelEvent( QWheelEvent *event )
     m_scaled = true;
     event->accept();
 }
-
 //! [3]
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 //! QIMAGE WIDGET //!
@@ -294,12 +309,14 @@ QImageWidget::QImageWidget( QWidget *parent )
     //! [11]
 
 }
+
 //---------------------------------------------------------------------------
 
 QImageWidget::~QImageWidget()
 {
 
 }
+
 //---------------------------------------------------------------------------
 
 //! [2]
@@ -318,6 +335,7 @@ void QImageWidget::setPixmapsPaths( const QStringList &paths )
 
     updatePixmapByIndex();
 }
+
 //---------------------------------------------------------------------------
 
 void QImageWidget::setPixmapsDirectory( const QString &dirPath )
@@ -359,6 +377,8 @@ void QImageWidget::setPixmapsDirectory( const QString &dirPath )
     }
 }
 
+//---------------------------------------------------------------------------
+
 QStringList QImageWidget::searchDirectory( const QString &dirPath )
 {
     QDirIterator::IteratorFlag searcherFlag;
@@ -377,6 +397,8 @@ QStringList QImageWidget::searchDirectory( const QString &dirPath )
 
     return paths;
 }
+
+//---------------------------------------------------------------------------
 
 void QImageWidget::setPixmapPathWithDirectorySearching( const QString &path )
 {
@@ -411,21 +433,28 @@ void QImageWidget::setPixmapPathWithDirectorySearching( const QString &path )
     updatePixmapByIndex();
 }
 
+//---------------------------------------------------------------------------
+
 void QImageWidget::setSubDirectorySearching( const bool &enable )
 {
     m_subDirectorySearching = enable;
 }
+
+//---------------------------------------------------------------------------
 
 bool QImageWidget::subDirectorySearching() const
 {
     return m_subDirectorySearching;
 }
 
+//---------------------------------------------------------------------------
+
 void QImageWidget::setPixmap( const QPixmap &pixmap )
 {
     m_currentPixmap = pixmap;
     updatePixmap();
 }
+
 //---------------------------------------------------------------------------
 
 // getters
@@ -433,6 +462,7 @@ QPixmap QImageWidget::currentPixmap() const
 {
     return m_currentPixmap;
 }
+
 //---------------------------------------------------------------------------
 
 QString QImageWidget::currentPixmapPath() const
@@ -440,10 +470,14 @@ QString QImageWidget::currentPixmapPath() const
     return m_currentPixmapPath;
 }
 
+//---------------------------------------------------------------------------
+
 int QImageWidget::currentPixmapIndex() const
 {
     return m_currentPixmapIndex;
 }
+
+//---------------------------------------------------------------------------
 
 int QImageWidget::pixmapsCount() const
 {
@@ -459,6 +493,7 @@ void QImageWidget::updatePixmapByIndex()
 
     updatePixmap();
 }
+
 //---------------------------------------------------------------------------
 
 void QImageWidget::updatePixmap()
@@ -532,6 +567,7 @@ QString QImageWidget::standartPixmapsDirectory()
 {
     return QStandardPaths::standardLocations( QStandardPaths::PicturesLocation ).at( 0 );
 }
+
 //---------------------------------------------------------------------------
 
 bool QImageWidget::isCurrentPixmapModified() const
@@ -543,16 +579,19 @@ bool QImageWidget::isCurrentPixmapModified() const
 //---------------------------------------------------------------------------
 
 //! [3]
-
 void QImageWidget::setEndlessScrollEnabled( const bool &value )
 {
     m_endlessScrollEnabled = value;
 }
 
+//---------------------------------------------------------------------------
+
 bool QImageWidget::endlessScrollEnabled() const
 {
     return m_endlessScrollEnabled;
 }
+
+//---------------------------------------------------------------------------
 
 void QImageWidget::goFirst()
 {
@@ -735,6 +774,8 @@ void QImageWidget::timerEvent( QTimerEvent *event )
     event->accept();
 }
 
+//---------------------------------------------------------------------------
+
 void QImageWidget::mouseDoubleClickEvent( QMouseEvent *event )
 {
     if ( m_scaled ) {
@@ -840,7 +881,6 @@ void QImageWidget::setUndoRedoAvailable()
 
     setCurrentPixmapModified( m_undoStack->canUndo() );
 }
-
 //! [6]
 
 //---------------------------------------------------------------------------
@@ -942,6 +982,8 @@ void QImageWidget::remove()
     }
 }
 
+//---------------------------------------------------------------------------
+
 void QImageWidget::deleteImage( const QString &path )
 {
     QFile::remove( path );
@@ -957,15 +999,21 @@ void QImageWidget::deleteImage( const QString &path )
     }
 }
 
+//---------------------------------------------------------------------------
+
 void QImageWidget::setShowRemoveDialog( const bool &show )
 {
     m_showRemoveDialog = show;
 }
 
+//---------------------------------------------------------------------------
+
 bool QImageWidget::showRemoveDialog() const
 {
     return m_showRemoveDialog;
 }
+
+//---------------------------------------------------------------------------
 
 bool QImageWidget::setAsWallpaper()
 {
@@ -991,6 +1039,8 @@ bool QImageWidget::setAsWallpaper()
     return true;
 }
 
+//---------------------------------------------------------------------------
+
 bool QImageWidget::save()
 {
     if ( !gotPath() ) {
@@ -1010,6 +1060,8 @@ bool QImageWidget::save()
 
     return false;
 }
+
+//---------------------------------------------------------------------------
 
 bool QImageWidget::saveAs()
 {
@@ -1036,6 +1088,8 @@ bool QImageWidget::saveAs()
 }
 //! [7]
 
+//---------------------------------------------------------------------------
+
 //! [8]
 void QImageWidget::setPreviewVisible( const bool &show )
 {
@@ -1049,10 +1103,14 @@ void QImageWidget::setPreviewVisible( const bool &show )
     m_timerId = startTimer( 100 ); // resize timer
 }
 
+//---------------------------------------------------------------------------
+
 bool QImageWidget::previewVisible() const
 {
     return m_previewVisible;
 }
+
+//---------------------------------------------------------------------------
 
 void QImageWidget::updatePreviewsForCurrentDirectory()
 {
@@ -1060,11 +1118,15 @@ void QImageWidget::updatePreviewsForCurrentDirectory()
     setPixmapsDirectory( QFileInfo( m_currentPixmapPath ).absolutePath() );
 }
 
+//---------------------------------------------------------------------------
+
 void QImageWidget::updatePreviewForStartingDirectory()
 {
     m_pixmapsPathsBefore.clear();
     setPixmapsDirectory( m_startedDirectoryPath );
 }
+
+//---------------------------------------------------------------------------
 
 void QImageWidget::setPreviewPixmapSize( const QSize &size )
 {
@@ -1072,10 +1134,14 @@ void QImageWidget::setPreviewPixmapSize( const QSize &size )
     m_previewWidget->setMaximumWidth( m_previewPixmapSize.width() + 50 );
 }
 
+//---------------------------------------------------------------------------
+
 QSize QImageWidget::previewPixmapSize() const
 {
     return m_previewPixmapSize;
 }
+
+//---------------------------------------------------------------------------
 
 void QImageWidget::currentPreviewChanged( const int &index )
 {
@@ -1092,6 +1158,8 @@ void QImageWidget::currentPreviewChanged( const int &index )
 }
 
 //! [8]
+
+//---------------------------------------------------------------------------
 
 //! [9]
 void QImageWidget::showInfomarion()
@@ -1114,10 +1182,9 @@ void QImageWidget::showInfomarion()
                                     " : " + QString::number( currentPixmapHeight() ) ) );
     m_infoBox->show();
 }
-
-
-
 //! [9]
+
+//---------------------------------------------------------------------------
 
 //! [10]
 void QImageWidget::setContexActions( QList<QAction *> contexActions )
@@ -1125,10 +1192,14 @@ void QImageWidget::setContexActions( QList<QAction *> contexActions )
     m_contexActions = contexActions;
 }
 
+//---------------------------------------------------------------------------
+
 QList < QAction * > QImageWidget::contexActions()
 {
     return m_contexActions;
 }
+
+//---------------------------------------------------------------------------
 
 void QImageWidget::contextMenuEvent( QContextMenuEvent *event )
 {
@@ -1138,6 +1209,8 @@ void QImageWidget::contextMenuEvent( QContextMenuEvent *event )
     m_contexMenu.exec( event->globalPos() );
 }
 //! [10]
+
+//---------------------------------------------------------------------------
 
 //! [11]
 void QImageWidget::appendNewPreview( const QString &path, QPixmap pixmap, const int &index )
@@ -1176,5 +1249,6 @@ void QImageWidget::appendNewPreview( const QString &path, QPixmap pixmap, const 
         m_previewThread->exit();
     }
 }
-
 //! [11]
+
+//---------------------------------------------------------------------------
