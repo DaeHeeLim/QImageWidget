@@ -247,7 +247,7 @@ public slots:
 
     //! [5] EDIT
     void copy();
-    void cut();
+    // void cut();
     void paste();
     //! [5]
 
