@@ -768,14 +768,16 @@ void QImageWidget::copy()
 
 //---------------------------------------------------------------------------
 
-void QImageWidget::cut()
-{
-    // todo: undo, redo
+// does anyone need this?
+// todo: undo for cut, if cut is needed
+// void QImageWidget::cut()
+// {
+//     // todo: undo, redo
 
-    copy();
+//     copy();
 
-    m_customGraphicsView->scene()->removeItem( m_graphicsPixmapItem );
-}
+//     m_customGraphicsView->scene()->removeItem( m_graphicsPixmapItem );
+// }
 
 //---------------------------------------------------------------------------
 
